@@ -15,7 +15,7 @@ module Actions
     if attacker.name == "Mei" || attacker.name == "Winston"
       mage_tank =  ultimate_chance_mage_tank()
     elsif attacker.name == "Genji" || attacker.name == "Mercy"
-      warrior_healer = ultimate_chance_mage_tank()
+      warrior_healer = ultimate_chance_healer_warrior()
     end
 
     puts "attacker: #{attacker.name}"
