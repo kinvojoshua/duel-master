@@ -58,13 +58,13 @@ module Actions
   def ultimate(hero)
     puts "ultimate:"
     if hero.name == "Mei" then
-      hero.damage = hero.damage + 100
+      hero.damage = 200
     elsif hero.name == "Genji" then
-      hero.damage = hero.damage + 125
+      hero.damage = 150
     elsif hero.name == "Mercy" then
-      hero.damage = hero.damage + 20
+      hero.damage = 25
     elsif hero.name == "Winston" then
-      hero.damage = hero.damage + 50
+      hero.damage = 50.5
     end
   end
 
