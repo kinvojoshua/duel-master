@@ -1,7 +1,7 @@
 module Actions
 
   def duel(hero1, hero2)
-
+  
     number = rand(1..2)
 
     if number == 1 then
@@ -27,13 +27,13 @@ module Actions
     if mage_tank == 2 || warrior_healer == 4 then
       ultimate(attacker)
       if attacker.name == "Mei" then
-        puts "#{attacker.name}'s Ultimate has been Triggered!! and gained + 100 Damage!!! "
+        puts "#{attacker.name}'s Ultimate(Blizzard) has been Triggered!! and gained + 100 Damage!!! "
       elsif attacker.name == "Genji" then
-        puts "#{attacker.name}'s Ultimate has been Triggered!! and gained + 125 Damage!!! "
+        puts "#{attacker.name}'s Ultimate(Dragonblade) has been Triggered!! and gained + 125 Damage!!! "
       elsif attacker.name == "Mercy" then
-        puts "#{attacker.name}'s Ultimate has been Triggered!! and gained + 20 Damage!!! "
+        puts "#{attacker.name}'s Ultimate(Ressurection) has been Triggered!! and gained + 20 Damage!!! "
       else
-        puts "#{attacker.name}'s Ultimate has been Triggered!! and gained + 50 Damage!!! "
+        puts "#{attacker.name}'s Ultimate(Primal Rage) has been Triggered!! and gained + 50 Damage!!! "
       end
     end
 
@@ -50,7 +50,7 @@ module Actions
     puts "total armor #{defender.armor} "
 
     if defender.hp == 0 then
-      puts "He did not make, He died"
+      puts "#{defender.name} did not make, #{defender.name} died"
     end
 
   end
