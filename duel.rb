@@ -1,6 +1,4 @@
-require "pry"
 class Engine
-
   def game_logic(attacker, defender)
    if attacker.name == "Mei" || attacker.name == "Winston"
       mage_tank =  ultimate_chance_mage_tank()
@@ -8,7 +6,6 @@ class Engine
       warrior_healer = ultimate_chance_healer_warrior()
     end
     damage = attacker.damage
-
     puts "attacker: #{attacker.name}"
     puts "defender: #{defender.name}"
     puts "#{attacker.name} attacked #{defender.name}"
@@ -25,9 +22,7 @@ class Engine
         puts "#{attacker.name}'s Ultimate(Primal Rage) has been Triggered!! and gained + 50 Damage!!! "
       end
     end
-
     compute(attacker, defender, damage)
-
     puts "#{attacker.name} dealt #{damage} to #{defender.name}"
     puts "--------Attacker--------"
     puts "#{attacker.name}"
@@ -42,7 +37,6 @@ class Engine
       puts "#{defender.name} did not make, #{defender.name} died"
       defender.hp
     end
-
   end
 
   def ultimate(hero)
@@ -78,8 +72,8 @@ class Engine
       if defender.hp < 0 then
         defender.hp = 0
       end
-  end
 
+  end
 
   def ultimate_chance_healer_warrior()
     warrior_healer = rand(1..4)
@@ -88,23 +82,22 @@ class Engine
   def ultimate_chance_mage_tank()
     mage_tank = rand(1..2)
   end
+
 end
 
 class Deathmatch < Engine
   def start(hero1,hero2)
     attacker, defender = [hero1, hero2].shuffle
-
     game_logic(attacker, defender)
   end
-
 end
 
 class Turnbased < Engine
   def start(hero1, hero2)
-    turn = 0
+    turn = 1
     attacker, defender = [hero1, hero2].shuffle
-    while turn != 5 do
-      puts "---------------- Game ##{turn+1}--------------------"
+    while turn != 6 do
+      puts "---------------- Game ##{turn}--------------------"
       hp = game_logic(attacker, defender)
       turn += 1
       break if hp == 0
@@ -116,6 +109,7 @@ class Turnbased < Engine
       puts "#{hero2.name} Won the duel"
     end
   end
+
 end
 
 class Duel
