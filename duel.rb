@@ -3,8 +3,16 @@ class GameMode
   def turn_based(hero1, hero2)
     $i = 0
     while $i != 5 do
+      puts "---------------- Game ##{$i+1}--------------------"
       hp = deathmatch(hero1, hero2)
+      $i += 1
       break if hp == 0
+    end
+
+    if hero1.hp > hero2.hp then
+      puts "#{hero1.name} Won the duel"
+    else
+      puts "#{hero2.name} Won the duel"
     end
   end
 
@@ -29,7 +37,7 @@ class GameMode
       warrior_healer = ultimate_chance_healer_warrior()
     end
     damage = attacker.damage   
-    puts "------------------------------"
+    
     puts "attacker: #{attacker.name}"
     puts "defender: #{defender.name}"
     puts "#{attacker.name} attacked #{defender.name}"
@@ -58,10 +66,9 @@ class GameMode
     puts "#{defender.name}"
     puts "total hp #{defender.hp}"
     puts "total armor #{defender.armor} "
-
+    
     if defender.hp == 0 then
       puts "#{defender.name} did not make, #{defender.name} died"
-      puts "#{attacker.name} Won!!"
       defender.hp
     end
 
