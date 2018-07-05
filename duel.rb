@@ -1,11 +1,13 @@
+require "pry"
+
 class GameMode
   
   def turn_based(hero1, hero2)
-    $i = 0
-    while $i != 5 do
-      puts "---------------- Game ##{$i+1}--------------------"
+   turn = 0
+    while turn != 5 do
+      puts "---------------- Game ##{turn+1}--------------------"
       hp = deathmatch(hero1, hero2)
-      $i += 1
+      turn += 1
       break if hp == 0
     end
 
