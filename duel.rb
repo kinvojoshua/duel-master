@@ -99,13 +99,13 @@ class Deathmatch < Engine
 
 end
 
-class Turnbased
+class Turnbased < Engine
   def start(hero1, hero2)
-    dm = Deathmatch.new
     turn = 0
+    attacker, defender = [hero1, hero2].shuffle
     while turn != 5 do
       puts "---------------- Game ##{turn+1}--------------------"
-      hp = dm.start(hero1, hero2)
+      hp = game_logic(attacker, defender)
       turn += 1
       break if hp == 0
     end
