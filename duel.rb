@@ -1,7 +1,14 @@
-module Actions
-
-  def duel(hero1, hero2)
+class GameMode
   
+  def turn_based(hero1, hero2)
+    $i = 0
+    while $i != 5 do
+      hp = deathmatch(hero1, hero2)
+      break if hp == 0
+    end
+  end
+
+  def deathmatch(hero1, hero2)
     number = rand(1..2)
 
     if number == 1 then
@@ -12,20 +19,23 @@ module Actions
       defender = hero1
     end
 
-    if attacker.name == "Mei" || attacker.name == "Winston"
+    game_logic(attacker, defender)
+  end
+
+  def game_logic(attacker, defender)
+   if attacker.name == "Mei" || attacker.name == "Winston"
       mage_tank =  ultimate_chance_mage_tank()
     elsif attacker.name == "Genji" || attacker.name == "Mercy"
       warrior_healer = ultimate_chance_healer_warrior()
     end
-
+    damage = attacker.damage   
+    puts "------------------------------"
     puts "attacker: #{attacker.name}"
     puts "defender: #{defender.name}"
     puts "#{attacker.name} attacked #{defender.name}"
-    puts "ult: #{mage_tank}"
-    puts "ult: #{warrior_healer}"
 
     if mage_tank == 2 || warrior_healer == 4 then
-      ultimate(attacker)
+      damage = ultimate(attacker)
       if attacker.name == "Mei" then
         puts "#{attacker.name}'s Ultimate(Blizzard) has been Triggered!! and gained + 100 Damage!!! "
       elsif attacker.name == "Genji" then
@@ -37,9 +47,9 @@ module Actions
       end
     end
 
-    compute(attacker, defender)
+    compute(attacker, defender, damage)
 
-    puts "#{attacker.name} dealt #{attacker.damage} to #{defender.name}"
+    puts "#{attacker.name} dealt #{damage} to #{defender.name}"
     puts "--------Attacker--------"
     puts "#{attacker.name}"
     puts "total hp: #{attacker.hp}"
@@ -51,6 +61,8 @@ module Actions
 
     if defender.hp == 0 then
       puts "#{defender.name} did not make, #{defender.name} died"
+      puts "#{attacker.name} Won!!"
+      defender.hp
     end
 
   end
@@ -69,16 +81,16 @@ module Actions
   end
 
   private
-  def compute(attacker, defender)
+  def compute(attacker, defender, damage)
       if defender.armor != 0 then
-        defender.armor = defender.armor - attacker.damage
+        defender.armor = defender.armor - damage
 
         if defender.armor < 0 then
-	         defender.hp = defender.hp - attacker.damage
+	         defender.hp = defender.hp - damage
         end
 
       else
-        defender.hp = defender.hp - attacker.damage
+        defender.hp = defender.hp - damage
       end
 
       if defender.armor < 0
@@ -100,8 +112,22 @@ module Actions
 
 end
 
-class Duel
-  extend Actions
+class Actions < GameMode
+
+  def duel(hero1, hero2, mode)
+   gm = GameMode.new  
+   
+   if mode == "dm" then
+    gm.deathmatch(hero1, hero2)
+   elsif mode == "tb" then
+    gm.turn_based(hero1, hero2)
+   end
+  end 
+  
+end
+
+class Duel < Actions
+  
 end
 
 class Hero
