@@ -1,35 +1,5 @@
 require "pry"
-
-class GameMode
-  def turn_based(hero1, hero2)
-   turn = 0
-    while turn != 5 do
-      puts "---------------- Game ##{turn+1}--------------------"
-      hp = deathmatch(hero1, hero2)
-      turn += 1
-      break if hp == 0
-    end
-
-    if hero1.hp > hero2.hp then
-      puts "#{hero1.name} Won the duel"
-    else
-      puts "#{hero2.name} Won the duel"
-    end
-  end
-
-  def deathmatch(hero1, hero2)
-    number = rand(1..2)
-
-    if number == 1 then
-      attacker = hero1
-      defender = hero2
-    else
-      attacker = hero2
-      defender = hero1
-    end
-
-    game_logic(attacker, defender)
-  end
+class Engine
 
   def game_logic(attacker, defender)
    if attacker.name == "Mei" || attacker.name == "Winston"
@@ -37,8 +7,8 @@ class GameMode
     elsif attacker.name == "Genji" || attacker.name == "Mercy"
       warrior_healer = ultimate_chance_healer_warrior()
     end
-    damage = attacker.damage   
-    
+    damage = attacker.damage
+
     puts "attacker: #{attacker.name}"
     puts "defender: #{defender.name}"
     puts "#{attacker.name} attacked #{defender.name}"
@@ -67,7 +37,7 @@ class GameMode
     puts "#{defender.name}"
     puts "total hp #{defender.hp}"
     puts "total armor #{defender.armor} "
-    
+
     if defender.hp == 0 then
       puts "#{defender.name} did not make, #{defender.name} died"
       defender.hp
@@ -110,6 +80,7 @@ class GameMode
       end
   end
 
+
   def ultimate_chance_healer_warrior()
     warrior_healer = rand(1..4)
   end
@@ -119,18 +90,39 @@ class GameMode
   end
 end
 
-class Duel < GameMode
-  
+class Deathmatch < Engine
+  def start(hero1,hero2)
+    attacker, defender = [hero1, hero2].shuffle
+
+    game_logic(attacker, defender)
+  end
+
+end
+
+class Turnbased
+  def start(hero1, hero2)
+    dm = Deathmatch.new
+    turn = 0
+    while turn != 5 do
+      puts "---------------- Game ##{turn+1}--------------------"
+      hp = dm.start(hero1, hero2)
+      turn += 1
+      break if hp == 0
+    end
+
+    if hero1.hp > hero2.hp then
+      puts "#{hero1.name} Won the duel"
+    else
+      puts "#{hero2.name} Won the duel"
+    end
+  end
+end
+
+class Duel
   def duel(hero1, hero2, mode)
-   gm = GameMode.new  
-   
-   if mode == "dm" then
-    gm.deathmatch(hero1, hero2)
-   elsif mode == "tb" then
-    gm.turn_based(hero1, hero2)
-   end
-  
-  end 
+    a = mode.new
+    a.start(hero1, hero2)
+  end
 end
 
 class Hero
