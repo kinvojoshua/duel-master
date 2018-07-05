@@ -1,7 +1,6 @@
 require "pry"
 
 class GameMode
-  
   def turn_based(hero1, hero2)
    turn = 0
     while turn != 5 do
@@ -118,11 +117,10 @@ class GameMode
   def ultimate_chance_mage_tank()
     mage_tank = rand(1..2)
   end
-
 end
 
-class Actions < GameMode
-
+class Duel < GameMode
+  
   def duel(hero1, hero2, mode)
    gm = GameMode.new  
    
@@ -131,12 +129,8 @@ class Actions < GameMode
    elsif mode == "tb" then
     gm.turn_based(hero1, hero2)
    end
+  
   end 
-  
-end
-
-class Duel < Actions
-  
 end
 
 class Hero
